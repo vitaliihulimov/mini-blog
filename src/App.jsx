@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Header from './components/Header';
 import Home from './pages/Home';
 import Posts from './pages/Posts';
 import AddPost from './pages/AddPost';
+import Favourites from './pages/Favourites';
 import PostModal from './components/PostModal';
 import './styles.css';
 
@@ -17,13 +18,17 @@ export default function App() {
           id: 1,
           title: 'Hello React',
           body: 'React is awesome! This is a longer description to show how the modal window works with more content. You can add images, format text, and create beautiful blog posts.',
-          image: null
+          image: null,
+          isFavourite: false,
+          createdAt: new Date('2024-01-01').getTime() // Додаємо timestamp для старих постів
         },
         {
           id: 2,
           title: 'Learning Components',
           body: 'Components make UI modular and reusable. They are the building blocks of React applications. With components, you can create complex UIs from small, isolated pieces of code.',
-          image: null
+          image: null,
+          isFavourite: false,
+          createdAt: new Date('2024-01-02').getTime()
         },
       ];
   });
@@ -36,8 +41,15 @@ export default function App() {
     localStorage.setItem('posts', JSON.stringify(posts));
   }, [posts]);
 
+  // ВИПРАВЛЕНА функція додавання поста з timestamp
   const addPost = (newPost) => {
-    setPosts([...posts, { id: Date.now(), ...newPost }]);
+    const postWithId = {
+      ...newPost,
+      id: Date.now(),
+      isFavourite: false,
+      createdAt: Date.now() // Додаємо поточний timestamp
+    };
+    setPosts([...posts, postWithId]);
   };
 
   const updatePost = (updatedPost) => {
@@ -61,6 +73,15 @@ export default function App() {
     }
   };
 
+  // Функція для додавання/видалення з улюблених
+  const toggleFavourite = (postId) => {
+    setPosts(posts.map(post =>
+      post.id === postId
+        ? { ...post, isFavourite: !post.isFavourite }
+        : post
+    ));
+  };
+
   const openModal = (post) => {
     setSelectedPost(post);
     setIsModalOpen(true);
@@ -75,15 +96,30 @@ export default function App() {
   };
 
   const startEditing = (post) => {
-    setSelectedPost(post); // Встановлюємо вибраний пост
-    setEditingPost(post);  // Встановлюємо пост для редагування
-    setIsModalOpen(true);  // Відкриваємо модалку
+    setSelectedPost(post);
+    setEditingPost(post);
+    setIsModalOpen(true);
     document.body.style.overflow = 'hidden';
   };
 
   const cancelEditing = () => {
     setEditingPost(null);
   };
+
+  // СОРТУВАННЯ ПОСТІВ - останні додані першими
+  const sortedPosts = useMemo(() => {
+    return [...posts].sort((a, b) => {
+      // Сортуємо за createdAt (якщо є) або за id (для старих постів)
+      const dateA = a.createdAt || a.id;
+      const dateB = b.createdAt || b.id;
+      return dateB - dateA; // Спадаючий порядок - новіші першими
+    });
+  }, [posts]);
+
+  // Отримуємо улюблені пости (також відсортовані)
+  const favouritePosts = useMemo(() => {
+    return sortedPosts.filter(post => post.isFavourite);
+  }, [sortedPosts]);
 
   return (
     <Router>
@@ -95,23 +131,30 @@ export default function App() {
             path="/posts"
             element={
               <Posts
-                posts={posts}
+                posts={sortedPosts} // Передаємо відсортовані пости
                 onDelete={deletePost}
                 onClear={clearPosts}
                 onPostClick={openModal}
-                onEdit={startEditing} // Додаємо onEdit проп
+                onEdit={startEditing}
+                onToggleFavourite={toggleFavourite}
               />
             }
           />
           <Route
             path="/add"
             element={
-              <AddPost
-                posts={posts}
-                onAdd={addPost}
+              <AddPost onAdd={addPost} />
+            }
+          />
+          <Route
+            path="/favourites"
+            element={
+              <Favourites
+                posts={favouritePosts}
                 onDelete={deletePost}
                 onPostClick={openModal}
-                onEdit={startEditing} // Додаємо onEdit проп
+                onEdit={startEditing}
+                onToggleFavourite={toggleFavourite}
               />
             }
           />
@@ -128,6 +171,7 @@ export default function App() {
           onEdit={startEditing}
           onUpdate={updatePost}
           onCancelEdit={cancelEditing}
+          onToggleFavourite={toggleFavourite}
         />
       )}
     </Router>

@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import Post from '../components/Post';
 
-export default function Posts({ posts, onDelete, onClear, onPostClick, onEdit, onToggleFavourite }) {
+export default function Favourites({ posts, onDelete, onPostClick, onEdit, onToggleFavourite }) {
     const [currentPage, setCurrentPage] = useState(1);
     const postsPerPage = 6;
 
@@ -47,38 +47,27 @@ export default function Posts({ posts, onDelete, onClear, onPostClick, onEdit, o
         return pages;
     };
 
-    // Функція для перевірки чи пост новий (доданий за останні 24 години)
-    const isNewPost = (post) => {
-        const postDate = post.createdAt || post.id;
-        const twentyFourHoursAgo = Date.now() - (24 * 60 * 60 * 1000);
-        return postDate > twentyFourHoursAgo;
-    };
-
     return (
         <div>
-            <div className="posts-header">
-                <h2>All Posts ({posts.length})</h2>
+            <div className="favourites-header">
+                <h2>❤️ Favourite Posts ({posts.length})</h2>
 
-                {posts.length > 0 && (
-                    <button onClick={onClear} className="clear-btn">
-                        Clear All Posts
-                    </button>
+                {posts.length === 0 && (
+                    <div className="no-favourites">
+                        <p>No favourite posts yet.</p>
+                        <p>Click the heart icon on any post to add it to favourites!</p>
+                    </div>
                 )}
             </div>
 
-            {posts.length === 0 ? (
-                <p className="no-posts">No posts yet. Add your first post!</p>
-            ) : (
+            {posts.length > 0 && (
                 <>
                     {/* Інформація про поточну сторінку */}
                     <div className="pagination-info">
-                        Showing {currentPosts.length} of {posts.length} posts
+                        Showing {currentPosts.length} of {posts.length} favourite posts
                         {totalPages > 1 && (
                             <span className="page-info"> - Page {currentPage} of {totalPages}</span>
                         )}
-                        <div className="sorting-info">
-                            📅 Sorted by: newest first
-                        </div>
                     </div>
 
                     {/* Сітка з постами */}
@@ -94,7 +83,6 @@ export default function Posts({ posts, onDelete, onClear, onPostClick, onEdit, o
                                 showDeleteButton={true}
                                 showEditButton={true}
                                 showFavouriteButton={true}
-                                isNew={isNewPost(p)} // Передаємо інформацію про новий пост
                             />
                         ))}
                     </div>

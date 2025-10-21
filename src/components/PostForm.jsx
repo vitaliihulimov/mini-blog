@@ -39,13 +39,15 @@ export default function PostForm({ onAdd }) {
         if (title && body) {
             onAdd({
                 title,
-                body: body, // Не нормалізуємо тут, будемо обробляти при відображенні
+                body: body,
                 image: imagePreview
             });
+            // Скидання форми
             setTitle('');
             setBody('');
             setImage(null);
             setImagePreview(null);
+            // Скидання file input
             const fileInput = document.getElementById('image-upload');
             if (fileInput) fileInput.value = '';
         }

@@ -3,8 +3,11 @@ export default function Post({
     onDelete,
     onPostClick,
     onEdit,
+    onToggleFavourite,
     showDeleteButton = false,
-    showEditButton = false
+    showEditButton = false,
+    showFavouriteButton = false,
+    isNew = false
 }) {
     const handleDelete = (e) => {
         e.stopPropagation();
@@ -20,6 +23,13 @@ export default function Post({
         }
     };
 
+    const handleFavourite = (e) => {
+        e.stopPropagation();
+        if (onToggleFavourite) {
+            onToggleFavourite(post.id);
+        }
+    };
+
     const handlePostClick = () => {
         if (onPostClick) {
             onPostClick(post);
@@ -30,8 +40,6 @@ export default function Post({
     const getFirstSentence = (text) => {
         if (!text) return '';
 
-        // Спрощений алгоритм для знаходження першого речення
-        // Шукаємо першу крапку, знак оклику або знак питання
         const sentenceEnders = /[.!?]/;
         const match = text.match(sentenceEnders);
 
@@ -40,7 +48,6 @@ export default function Post({
             return text.substring(0, endIndex).trim();
         }
 
-        // Якщо немає закінчення речення, беремо перші 120 символів
         return text.length > 120 ? text.substring(0, 120) + '...' : text;
     };
 
@@ -52,21 +59,34 @@ export default function Post({
         const hasMoreContent = text.length > firstSentence.length;
 
         return (
-            <>
+            <div className="post-body-content">
                 {firstSentence}
                 {hasMoreContent && <span className="read-more">Read more</span>}
-            </>
+            </div>
         );
     };
 
     return (
         <div
-            className={`post-card ${onPostClick ? 'clickable' : ''}`}
+            className={`post-card ${onPostClick ? 'clickable' : ''} ${isNew ? 'new-post' : ''}`}
             onClick={handlePostClick}
         >
+            {/* Індикатор нового поста */}
+            {isNew && <div className="new-badge">🆕 New</div>}
+
             <div className="post-header">
                 <h3 className="post-title">{post.title}</h3>
                 <div className="post-actions">
+                    {showFavouriteButton && onToggleFavourite && (
+                        <button
+                            onClick={handleFavourite}
+                            className={`favourite-btn ${post.isFavourite ? 'favourited' : ''}`}
+                            aria-label={post.isFavourite ? "Remove from favourites" : "Add to favourites"}
+                            title={post.isFavourite ? "Remove from favourites" : "Add to favourites"}
+                        >
+                            {post.isFavourite ? '❤️' : '🤍'}
+                        </button>
+                    )}
                     {showEditButton && onEdit && (
                         <button
                             onClick={handleEdit}

@@ -983,3 +983,1007 @@ body {
     font-size: 0.85rem;
   }
 }
+
+/* Стилі для кнопки улюбленого */
+.favourite-btn {
+  background: transparent;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.favourite-btn:hover {
+  background: rgba(255, 105, 180, 0.1);
+  transform: scale(1.1);
+}
+
+.favourite-btn.favourited {
+  background: rgba(255, 105, 180, 0.2);
+}
+
+/* Стилі для кнопки улюбленого в модалці */
+.modal-header-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.modal-favourite-btn {
+  background: transparent;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.modal-favourite-btn:hover {
+  background: rgba(255, 105, 180, 0.1);
+  transform: scale(1.1);
+}
+
+.modal-favourite-btn.favourited {
+  background: rgba(255, 105, 180, 0.2);
+}
+
+/* Стилі для сторінки улюблених */
+.favourites-header {
+  margin-bottom: 2rem;
+}
+
+.no-favourites {
+  text-align: center;
+  color: #666;
+  padding: 3rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.no-favourites p {
+  margin: 0.5rem 0;
+}
+
+.no-favourites p:first-child {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+/* Адаптивність для кнопок */
+@media (max-width: 768px) {
+  .post-actions {
+    gap: 0.4rem;
+  }
+
+  .favourite-btn,
+  .edit-btn,
+  .delete-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  .modal-header-actions {
+    gap: 0.3rem;
+  }
+
+  .modal-favourite-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .post-header {
+    padding: 1rem;
+  }
+
+  .post-actions {
+    align-self: flex-end;
+    margin-top: 0.5rem;
+  }
+}
+
+/* Основний контейнер */
+.container {
+  padding: 1rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* АДАПТИВНА СІТКА */
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+/* Стилі для картки поста */
+.post-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  min-height: 200px;
+  break-inside: avoid;
+}
+
+/* Забезпечуємо, що картки не виходять за межі контейнера */
+.post-card img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Покращуємо адаптивність */
+@media (max-width: 1200px) {
+  .container {
+    max-width: 100%;
+    padding: 1rem 1.5rem;
+  }
+
+  .posts-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .posts-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+/* Планшет (768px - 1024px) */
+@media (max-width: 1024px) {
+  .posts-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+/* Мобільний (до 768px) */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .posts-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 0 auto;
+  }
+
+  .post-card {
+    margin: 0 auto;
+    max-width: 100%;
+  }
+}
+
+/* Маленькі мобільні (до 480px) */
+@media (max-width: 480px) {
+  .container {
+    padding: 0.75rem;
+  }
+
+  .posts-grid {
+    gap: 0.75rem;
+  }
+
+  .post-header {
+    padding: 1rem;
+  }
+
+  .post-body {
+    padding: 1rem;
+  }
+}
+
+/* Додаткові стилі для уникнення переповнення */
+.post-title {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.post-body {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Стилі для заголовка сторінки з постами */
+.posts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 100%;
+}
+
+.posts-header h2 {
+  margin: 0;
+}
+
+.no-posts {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 3rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Стилі для сторінки улюблених */
+.favourites-header {
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.no-favourites {
+  text-align: center;
+  color: #666;
+  padding: 3rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.no-favourites p {
+  margin: 0.5rem 0;
+}
+
+.no-favourites p:first-child {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+/* Основний контейнер */
+.container {
+  padding: 1rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* АДАПТИВНА СІТКА */
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  align-items: stretch; /* Вирівнюємо всі картки по висоті */
+}
+
+/* Стилі для картки поста - ФІКСОВАНА ВИСОТА */
+.post-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  height: 350px; /* Фіксована висота для всіх карток */
+  min-height: 350px;
+}
+
+/* ФІКСОВАНИЙ РОЗМІР ДЛЯ ВСІХ ЗОБРАЖЕНЬ */
+.post-image {
+  width: 100%;
+  height: 200px; /* Фіксована висота для всіх зображень */
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0; /* Забороняємо зменшення */
+}
+
+.post-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Заповнюємо область без спотворення */
+  display: block;
+}
+
+/* Контент поста - займає доступний простір */
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.25rem;
+  border-bottom: 1px solid #f0f0f0;
+  gap: 0.75rem;
+  flex-shrink: 0; /* Забороняємо зменшення */
+}
+
+.post-title {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  color: #333;
+  flex: 1;
+  word-wrap: break-word;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Обмежуємо заголовок до 2 рядків */
+  -webkit-box-orient: vertical;
+}
+
+/* Тіло поста - займає весь доступний простір */
+.post-body {
+  padding: 1.25rem;
+  color: #555;
+  line-height: 1.5;
+  flex: 1; /* Займає весь доступний простір */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Текст всередині body займає весь простір */
+.post-body-content {
+  flex: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Обмежуємо текст до 3 рядків */
+  -webkit-box-orient: vertical;
+  line-height: 1.4;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.read-more {
+  color: #61dafb;
+  font-weight: 600;
+  margin-left: 6px;
+  font-size: 0.9rem;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+/* Кнопки дій */
+.post-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.favourite-btn,
+.edit-btn,
+.delete-btn {
+  background: transparent;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.favourite-btn:hover {
+  background: rgba(255, 105, 180, 0.1);
+  transform: scale(1.1);
+}
+
+.favourite-btn.favourited {
+  background: rgba(255, 105, 180, 0.2);
+}
+
+.edit-btn {
+  background: #28a745;
+  color: white;
+}
+
+.edit-btn:hover {
+  background: #218838;
+  transform: scale(1.1);
+}
+
+.delete-btn {
+  background: #ff4d4f;
+  color: white;
+}
+
+.delete-btn:hover {
+  background: #d9363e;
+  transform: scale(1.1);
+}
+
+/* Адаптивність */
+@media (max-width: 1200px) {
+  .container {
+    max-width: 100%;
+    padding: 1rem 1.5rem;
+  }
+
+  .posts-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .post-card {
+    height: 380px;
+    min-height: 380px;
+  }
+
+  .post-image {
+    height: 180px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .posts-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .post-card {
+    height: 360px;
+    min-height: 360px;
+  }
+
+  .post-image {
+    height: 160px;
+  }
+}
+
+/* Мобільний (до 768px) */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .posts-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 0 auto;
+  }
+
+  .post-card {
+    height: auto; /* На мобільних робимо висоту автоматичною */
+    min-height: auto;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .post-image {
+    height: 200px; /* На мобільних теж фіксована висота */
+  }
+}
+
+/* Маленькі мобільні (до 480px) */
+@media (max-width: 480px) {
+  .container {
+    padding: 0.75rem;
+  }
+
+  .posts-grid {
+    gap: 0.75rem;
+  }
+
+  .post-header {
+    padding: 1rem;
+  }
+
+  .post-body {
+    padding: 1rem;
+  }
+
+  .post-image {
+    height: 180px;
+  }
+}
+
+/* Стилі для постів без зображень */
+.post-card:has(.post-image:empty) .post-body,
+.post-card:not(:has(.post-image)) .post-body {
+  padding-top: 1.25rem;
+}
+
+/* Забезпечуємо однакову висоту для всіх карток в одному рядку */
+.posts-grid {
+  grid-auto-rows: 1fr; /* Всі рядки однакової висоти */
+}
+
+.post-card {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Основний контейнер */
+.container {
+  padding: 1rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* АДАПТИВНА СІТКА З ФІКСОВАНОЮ ШИРИНОЮ */
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 320px); /* Фіксована ширина 320px */
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  justify-content: center; /* Вирівнюємо по центру */
+  align-items: stretch;
+}
+
+/* Стилі для картки поста - ФІКСОВАНА ШИРИНА ТА ВИСОТА */
+.post-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  width: 320px; /* Фіксована ширина */
+  height: 370px; /* Фіксована висота */
+  min-height: 350px;
+  flex-shrink: 0; /* Забороняємо стискання */
+}
+
+.post-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* ФІКСОВАНИЙ РОЗМІР ДЛЯ ВСІХ ЗОБРАЖЕНЬ */
+.post-image {
+  width: 100%;
+  height: 200px; /* Фіксована висота для всіх зображень */
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.post-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Контент поста */
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.25rem;
+  border-bottom: 1px solid #f0f0f0;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.post-title {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  color: #333;
+  flex: 1;
+  word-wrap: break-word;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  min-height: 2.8em; /* Фіксована висота для заголовка */
+}
+
+/* Тіло поста */
+.post-body {
+  padding: 1.25rem;
+  color: #555;
+  line-height: 1.5;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-body-content {
+  flex: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-height: 1.4;
+  min-height: 4.2em; /* Фіксована мінімальна висота для тексту */
+  display: flex;
+}
+
+.read-more {
+  color: #61dafb;
+  font-weight: 600;
+  margin-left: 6px;
+  font-size: 0.9rem;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+/* Кнопки дій */
+.post-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.favourite-btn,
+.edit-btn,
+.delete-btn {
+  background: transparent;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.favourite-btn:hover {
+  background: rgba(255, 105, 180, 0.1);
+  transform: scale(1.1);
+}
+
+.favourite-btn.favourited {
+  background: rgba(255, 105, 180, 0.2);
+}
+
+.edit-btn {
+  background: #28a745;
+  color: white;
+}
+
+.edit-btn:hover {
+  background: #218838;
+  transform: scale(1.1);
+}
+
+.delete-btn {
+  background: #ff4d4f;
+  color: white;
+}
+
+.delete-btn:hover {
+  background: #d9363e;
+  transform: scale(1.1);
+}
+
+/* Адаптивність */
+@media (max-width: 1200px) {
+  .posts-grid {
+    grid-template-columns: repeat(auto-fit, 320px);
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .posts-grid {
+    grid-template-columns: repeat(auto-fit, 300px); /* Трохи менша ширина */
+    gap: 1.25rem;
+  }
+
+  .post-card {
+    width: 300px;
+    height: 400px;
+    min-height: 400px;
+  }
+}
+
+/* Планшет (768px - 1024px) */
+@media (max-width: 1024px) {
+  .posts-grid {
+    grid-template-columns: repeat(auto-fit, 300px);
+    gap: 1.25rem;
+  }
+
+  .post-card {
+    width: 300px;
+    height: 360px;
+    min-height: 350px;
+  }
+}
+
+/* Мобільний (до 768px) */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .posts-grid {
+    grid-template-columns: repeat(auto-fit, 320px);
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .post-card {
+    width: 320px;
+    height: 360px;
+    min-height: 300px;
+    margin: 0 auto;
+  }
+}
+
+/* Маленькі мобільні (до 480px) */
+@media (max-width: 480px) {
+  .container {
+    padding: 0.75rem;
+  }
+
+  .posts-grid {
+    grid-template-columns: 1fr; /* На дуже малих екранах - одна колонка */
+    gap: 0.75rem;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .post-card {
+    width: 100%;
+    max-width: 320px;
+    height: 330px;
+    min-height: 300px;
+    margin: 0 auto;
+  }
+
+  .post-header {
+    padding: 1rem;
+  }
+
+  .post-body {
+    padding: 1rem;
+  }
+
+  .post-image {
+    height: 180px;
+  }
+}
+
+/* Для дуже малих екранів */
+@media (max-width: 360px) {
+  .posts-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .post-card {
+    width: 100%;
+    height: 330px;
+    min-height: 300px;
+    margin: 0 auto;
+  }
+
+  .post-image {
+    height: 160px;
+  }
+
+  .post-title {
+    font-size: 1rem;
+  }
+
+  .post-body {
+    font-size: 0.9rem;
+  }
+}
+
+/* Стилі для постів без зображень */
+.post-card:has(.post-image:empty) .post-body,
+.post-card:not(:has(.post-image)) .post-body {
+  padding-top: 1.25rem;
+}
+
+/* Забезпечуємо однакові розміри для всіх карток */
+.posts-grid {
+  grid-auto-rows: 1fr;
+}
+
+.post-card {
+  display: flex;
+  flex-direction: column;
+}
+/* Стилі для пагінації */
+.pagination-info {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.page-info {
+  font-weight: 500;
+  color: #333;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding: 1rem 0;
+  flex-wrap: wrap;
+}
+
+.pagination-btn {
+  background: #61dafb;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  min-width: 80px;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #4fa8c5;
+  transform: translateY(-1px);
+}
+
+.pagination-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.pagination-numbers {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.pagination-number {
+  background: #f0f0f0;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination-number:hover {
+  background: #e0e0e0;
+  transform: translateY(-1px);
+}
+
+.pagination-number.active {
+  background: #61dafb;
+  color: white;
+  font-weight: 600;
+}
+
+/* Адаптивність для пагінації */
+@media (max-width: 768px) {
+  .pagination {
+    gap: 0.5rem;
+  }
+
+  .pagination-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    min-width: 70px;
+  }
+
+  .pagination-number {
+    width: 32px;
+    height: 32px;
+    font-size: 0.8rem;
+  }
+
+  .pagination-numbers {
+    gap: 0.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pagination {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .pagination-numbers {
+    order: -1;
+  }
+
+  .pagination-info {
+    font-size: 0.8rem;
+  }
+}
+
+/* Стилі для інформації про сортування */
+.sorting-info {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: #666;
+  font-style: italic;
+}
+
+/* Стилі для нового поста */
+.new-post {
+  position: relative;
+  border: 2px solid #61dafb;
+}
+
+.new-badge {
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  background: #61dafb;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  z-index: 10;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Адаптивність для баджа */
+@media (max-width: 480px) {
+  .new-badge {
+    top: 8px;
+    right: 8px;
+    font-size: 0.65rem;
+    padding: 3px 6px;
+  }
+}

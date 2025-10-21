@@ -7,14 +7,21 @@ export default function PostModal({
     onDelete,
     onEdit,
     onUpdate,
-    onCancelEdit
+    onCancelEdit,
+    onToggleFavourite
 }) {
     const [editTitle, setEditTitle] = useState(post.title);
     const [editBody, setEditBody] = useState(post.body);
     const [editImage, setEditImage] = useState(post.image);
     const [imagePreview, setImagePreview] = useState(post.image);
+    const [currentPost, setCurrentPost] = useState(post); // Додаємо локальний стан для поста
 
     const isEditing = editingPost && editingPost.id === post.id;
+
+    // Оновлюємо локальний стан при зміні пропсу post
+    useEffect(() => {
+        setCurrentPost(post);
+    }, [post]);
 
     useEffect(() => {
         if (isEditing) {
@@ -51,8 +58,19 @@ export default function PostModal({
 
     const handleDelete = () => {
         if (window.confirm('Are you sure you want to delete this post?')) {
-            onDelete(post.id);
+            onDelete(currentPost.id);
             onClose();
+        }
+    };
+
+    const handleFavourite = () => {
+        if (onToggleFavourite) {
+            onToggleFavourite(currentPost.id);
+            // Оновлюємо локальний стан негайно
+            setCurrentPost(prev => ({
+                ...prev,
+                isFavourite: !prev.isFavourite
+            }));
         }
     };
 
@@ -63,7 +81,7 @@ export default function PostModal({
         }
 
         onUpdate({
-            ...post,
+            ...currentPost,
             title: editTitle,
             body: editBody,
             image: editImage
@@ -101,7 +119,6 @@ export default function PostModal({
     const renderFullTextWithParagraphs = (text) => {
         if (!text) return <p className="text-paragraph">No content</p>;
 
-        // Розділяємо текст на абзаци по подвійним переносам рядків
         const paragraphs = text.split(/\n\s*\n/).filter(paragraph => paragraph.trim() !== '');
 
         if (paragraphs.length === 0) return <p className="text-paragraph">No content</p>;
@@ -131,11 +148,23 @@ export default function PostModal({
                             placeholder="Post title"
                         />
                     ) : (
-                        <h2 className="modal-title">{post.title}</h2>
+                        <h2 className="modal-title">{currentPost.title}</h2>
                     )}
-                    <button className="modal-close-btn" onClick={isEditing ? onCancelEdit : onClose}>
-                        ×
-                    </button>
+                    <div className="modal-header-actions">
+                        {!isEditing && onToggleFavourite && (
+                            <button
+                                onClick={handleFavourite}
+                                className={`modal-favourite-btn ${currentPost.isFavourite ? 'favourited' : ''}`}
+                                aria-label={currentPost.isFavourite ? "Remove from favourites" : "Add to favourites"}
+                                title={currentPost.isFavourite ? "Remove from favourites" : "Add to favourites"}
+                            >
+                                {currentPost.isFavourite ? '❤️' : '🤍'}
+                            </button>
+                        )}
+                        <button className="modal-close-btn" onClick={isEditing ? onCancelEdit : onClose}>
+                            ×
+                        </button>
+                    </div>
                 </div>
 
                 <div className="modal-body">
@@ -166,9 +195,9 @@ export default function PostModal({
                                 />
                             </>
                         ) : (
-                            post.image && (
+                            currentPost.image && (
                                 <div className="modal-image">
-                                    <img src={post.image} alt={post.title} />
+                                    <img src={currentPost.image} alt={currentPost.title} />
                                 </div>
                             )
                         )}
@@ -190,7 +219,7 @@ export default function PostModal({
                             </>
                         ) : (
                             <div className="modal-text">
-                                {renderFullTextWithParagraphs(post.body)}
+                                {renderFullTextWithParagraphs(currentPost.body)}
                             </div>
                         )}
                     </div>
@@ -222,7 +251,7 @@ export default function PostModal({
                             </button>
                             <button
                                 className="modal-edit-btn"
-                                onClick={() => onEdit(post)}
+                                onClick={() => onEdit(currentPost)}
                             >
                                 Edit Post
                             </button>
