@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState, useEffect, useMemo } from 'react';
 import Header from './components/Header';
 import Home from './pages/Home';
@@ -20,7 +20,7 @@ export default function App() {
           body: 'React is awesome! This is a longer description to show how the modal window works with more content. You can add images, format text, and create beautiful blog posts.',
           image: null,
           isFavourite: false,
-          createdAt: new Date('2024-01-01').getTime() // Додаємо timestamp для старих постів
+          createdAt: new Date('2024-01-01').getTime()
         },
         {
           id: 2,
@@ -41,13 +41,12 @@ export default function App() {
     localStorage.setItem('posts', JSON.stringify(posts));
   }, [posts]);
 
-  // ВИПРАВЛЕНА функція додавання поста з timestamp
   const addPost = (newPost) => {
     const postWithId = {
       ...newPost,
       id: Date.now(),
       isFavourite: false,
-      createdAt: Date.now() // Додаємо поточний timestamp
+      createdAt: Date.now()
     };
     setPosts([...posts, postWithId]);
   };
@@ -73,7 +72,6 @@ export default function App() {
     }
   };
 
-  // Функція для додавання/видалення з улюблених
   const toggleFavourite = (postId) => {
     setPosts(posts.map(post =>
       post.id === postId
@@ -106,17 +104,14 @@ export default function App() {
     setEditingPost(null);
   };
 
-  // СОРТУВАННЯ ПОСТІВ - останні додані першими
   const sortedPosts = useMemo(() => {
     return [...posts].sort((a, b) => {
-      // Сортуємо за createdAt (якщо є) або за id (для старих постів)
       const dateA = a.createdAt || a.id;
       const dateB = b.createdAt || b.id;
-      return dateB - dateA; // Спадаючий порядок - новіші першими
+      return dateB - dateA;
     });
   }, [posts]);
 
-  // Отримуємо улюблені пости (також відсортовані)
   const favouritePosts = useMemo(() => {
     return sortedPosts.filter(post => post.isFavourite);
   }, [sortedPosts]);
@@ -131,7 +126,7 @@ export default function App() {
             path="/posts"
             element={
               <Posts
-                posts={sortedPosts} // Передаємо відсортовані пости
+                posts={sortedPosts}
                 onDelete={deletePost}
                 onClear={clearPosts}
                 onPostClick={openModal}
@@ -161,7 +156,6 @@ export default function App() {
         </Routes>
       </div>
 
-      {/* Модальне вікно для перегляду/редагування поста */}
       {isModalOpen && selectedPost && (
         <PostModal
           post={selectedPost}
