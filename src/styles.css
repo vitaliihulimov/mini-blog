@@ -87,7 +87,6 @@ body {
   margin-bottom: 2rem;
   width: 100%;
   align-items: stretch;
-  justify-content: center;
 }
 
 /* Картка поста */
@@ -874,12 +873,15 @@ body {
     grid-template-columns: 1fr;
     gap: 0.75rem;
     max-width: 320px;
+    margin: 0 auto; /* Центруємо всю сітку */
+    justify-items: center; /* Центруємо елементи всередині сітки */
   }
 
   .post-card {
     width: 100%;
     max-width: 320px;
     height: 330px;
+    margin: 0 auto; /* Додатково центруємо кожну картку */
   }
 
   .post-header {
@@ -940,10 +942,12 @@ body {
   .posts-grid {
     grid-template-columns: 1fr;
     gap: 0.75rem;
+    max-width: 300px; /* Трохи менша максимальна ширина */
   }
 
   .post-card {
     width: 100%;
+    max-width: 300px;
     height: 330px;
   }
 
