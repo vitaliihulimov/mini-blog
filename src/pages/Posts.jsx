@@ -1,20 +1,34 @@
 import Post from '../components/Post';
 
-export default function Posts({ posts, onClear }) {
+export default function Posts({ posts, onDelete, onClear, onPostClick, onEdit }) {
     return (
         <div>
-            <h2>All Posts</h2>
+            <div className="posts-header">
+                <h2>All Posts ({posts.length})</h2>
 
-            {posts.length > 0 && (
-                <button onClick={onClear} className="clear-btn">
-                    Clear All Posts
-                </button>
-            )}
+                {posts.length > 0 && (
+                    <button onClick={onClear} className="clear-btn">
+                        Clear All Posts
+                    </button>
+                )}
+            </div>
 
             {posts.length === 0 ? (
-                <p>No posts yet.</p>
+                <p className="no-posts">No posts yet. Add your first post!</p>
             ) : (
-                posts.map((p) => <Post key={p.id} title={p.title} body={p.body} />)
+                <div className="posts-grid">
+                    {posts.map((p) => (
+                        <Post
+                            key={p.id}
+                            post={p}
+                            onDelete={onDelete}
+                            onPostClick={onPostClick}
+                            onEdit={onEdit} // Передаємо onEdit проп
+                            showDeleteButton={true}
+                            showEditButton={true}
+                        />
+                    ))}
+                </div>
             )}
         </div>
     );
