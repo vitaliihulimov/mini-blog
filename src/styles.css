@@ -87,6 +87,7 @@ body {
   margin-bottom: 2rem;
   width: 100%;
   align-items: stretch;
+  justify-content: center; /* Центруємо сітку */
 }
 
 /* Картка поста */
