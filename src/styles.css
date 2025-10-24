@@ -298,6 +298,9 @@ body {
 /* Завантаження зображень */
 .image-upload-section {
   margin: 15px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .image-upload-label {
@@ -324,6 +327,9 @@ body {
 .image-preview {
   margin-top: 15px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .image-preview img {
